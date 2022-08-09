@@ -1,0 +1,14 @@
+---
+
+- name: Restart Docker Daemon
+  ansible.builtin.service:
+    name: docker
+    state: "{{ docker_restart_handler_state }}"
+  listen: restart_dockerd
+
+- name: Reload systemd Daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+  listen: reload_systemd
+
+...

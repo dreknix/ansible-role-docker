@@ -1,0 +1,5 @@
+ansible
+ansible-lint
+yamllint
+molecule[docker,podman]
+argcomplete # bash completion

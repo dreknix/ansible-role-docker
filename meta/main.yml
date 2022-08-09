@@ -1,0 +1,23 @@
+---
+
+galaxy_info:
+  role_name: docker
+  author: dreknix
+  description: Ansible role for docker and docker-compose
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+  galaxy_tags:
+    - debian
+    - ubuntu
+    - docker
+# dependencies:
+#   - role: systemd
+
+...

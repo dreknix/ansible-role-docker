@@ -1,0 +1,21 @@
+---
+
+- name: Install Docker Compose
+  ansible.builtin.package:
+    name: "{{ docker_compose_package }}"
+    state: "{{ docker_compose_package_state }}"
+
+- name: Create /usr/local/lib/systemd/system
+  ansible.builtin.file:
+    path: /usr/local/lib/systemd/system/
+    state: directory
+    mode: 0755
+
+- name: Deploy docker-compose@.service
+  ansible.builtin.template:
+    dest: /usr/local/lib/systemd/system/docker-compose@.service
+    src: docker-compose@.service.j2
+    mode: 0640
+  notify: Reload systemd
+
+...
