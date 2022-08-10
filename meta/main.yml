@@ -17,7 +17,7 @@ galaxy_info:
     - debian
     - ubuntu
     - docker
-# dependencies:
-#   - role: systemd
+dependencies:
+  - role: systemd
 
 ...

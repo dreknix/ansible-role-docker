@@ -1,4 +1,4 @@
-ansible
+ansible==5.10.0
 ansible-lint
 yamllint
 molecule[docker,podman]
