@@ -1,4 +1,5 @@
 ---
+
 - name: Ensure old versions of Docker are not installed.
   ansible.builtin.package:
     name:
@@ -13,41 +14,22 @@
       - ca-certificates
     state: present
 
-- name: Ensure additional dependencies are installed (on Ubuntu < 20.04 and any other systems).
-  ansible.builtin.apt:
-    name: gnupg2
-    state: present
-  when: ansible_distribution != 'Ubuntu' or ansible_distribution_version is version('20.04', '<')
-
-- name: Ensure additional dependencies are installed (on Ubuntu >= 20.04).
+- name: Ensure additional dependencies are installed.
   ansible.builtin.apt:
     name: gnupg
     state: present
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution_version is version('20.04', '>=')
 
 - name: Add Docker apt key.
-  ansible.builtin.apt_key:
-    url: "{{ docker_apt_gpg_key }}"
-    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
-    state: present
-  register: add_repository_key
-  ignore_errors: "{{ docker_apt_ignore_key_error }}"
-
-- name: Ensure curl is present (on older systems without SNI).
-  ansible.builtin.package: name=curl state=present
-  when: add_repository_key is failed
-
-- name: Add Docker apt key (alternative for older systems without SNI).
-  ansible.builtin.shell: |
-    set -o pipefail &&
-    curl -sSL {{ docker_apt_gpg_key }} | sudo apt-key add -
-  args:
-    executable: /bin/bash
-    warn: false
-  when: add_repository_key is failed
+  ansible.builtin.get_url:
+    url: "{{ docker_apt_key_url }}"
+    dest: "{{ docker_apt_key_file }}"
+    mode: '0644'
+    force: true
 
 - name: Add Docker repository.
   ansible.builtin.apt_repository:
     repo: "{{ docker_apt_repository }}"
     state: present
     update_cache: true
+
+...
