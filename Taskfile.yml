@@ -5,14 +5,6 @@ version: '3'
 
 tasks:
 
-  python:
-    desc: Install/Upgrade Ansible and Python packages
-    cmds:
-      # Upgrade pip3 and install wheel
-      - pip3 install --upgrade pip wheel
-      # Install/upgrade requirements
-      - pip3 install --upgrade -r requirements.txt
-
   lint:
     desc: Lint with Molecule
     cmds:
