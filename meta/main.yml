@@ -1,5 +1,8 @@
 ---
 
+dependencies:
+  - systemd
+
 galaxy_info:
   role_name: docker
   author: dreknix
