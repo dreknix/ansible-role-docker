@@ -1,9 +1,9 @@
 ---
 
 # Ansible role for systemd
-- src: git@github.com:dreknix/ansible-role-systemd.git
+- name: dreknix.systemd
+  src: git@github.com:dreknix/ansible-role-systemd.git
   scm: git
   version: main
-  name: systemd
 
 ...

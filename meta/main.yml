@@ -1,7 +1,7 @@
 ---
 
 dependencies:
-  - systemd
+  - name: dreknix.systemd
 
 galaxy_info:
   role_name: docker
