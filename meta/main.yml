@@ -2,6 +2,7 @@
 
 dependencies:
   - name: dreknix.systemd
+    src: git@github.com:dreknix/ansible-role-systemd.git
 
 galaxy_info:
   role_name: docker
