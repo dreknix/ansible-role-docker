@@ -1,5 +1,7 @@
 ---
 
+allow_duplicates: false
+
 dependencies:
   - name: dreknix.systemd
     src: git+https://github.com/dreknix/ansible-role-systemd.git
