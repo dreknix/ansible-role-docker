@@ -41,4 +41,9 @@ docker_yum_gpg_key: "{{ docker_repo_url }}/centos/gpg"
 # List of users who will be added to the docker group
 docker_users: []
 
+# Directory of systemd service unit
+docker_compose_systemd_path: "/usr/local/lib/systemd/system"
+
+docker_compose_systemd_unit_file: "{{ docker_compose_systemd_path }}/docker-compose@.service"
+
 ...
