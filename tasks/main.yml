@@ -25,7 +25,7 @@
     src: "daemon.json.j2"
     dest: "{{ docker_daemon_file }}"
     mode: 0644
-  when: not docker_daemon_stat_result.exists
+  when: not docker_daemon_stat_result.exist
 
 - name: Ensure Docker logs send to journald
   ansible.builtin.lineinfile:
