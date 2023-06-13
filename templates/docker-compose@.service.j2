@@ -1,27 +1,37 @@
 [Unit]
 Description=%i service powered by docker compose
-Requires=docker.service
+PartOf=docker.service
 After=docker.service
 
 [Service]
+# Create a directory for each docker-composed service at {{ docker_compose_base_dir }}.
+# Name the directory as the service.
+WorkingDirectory={{ docker_compose_base_dir }}/%i
+
+# Some Docker images may need some time to be built which is done when starting
+# the service
+TimeoutStartSec=15min
+
+Type=simple
 Restart=always
-TimeoutStartSec=300
 
-#   Create a directory for each docker-composed service at /srv/docker.
-#   Name the directory as the service.
-WorkingDirectory=/srv/docker/%i
+# Remove old containers, images and volumes
+ExecStartPre=/usr/local/bin/docker-compose down --remove-orphans
+ExecStartPre=/usr/local/bin/docker-compose rm --force
 
-#   Remove old containers, images and volumes and update it
-ExecStartPre=/usr/bin/docker compose down
-ExecStartPre=/usr/bin/docker compose rm -f
-#   Comment the following to not automatically update your images!
-ExecStartPre=/usr/bin/docker compose pull
+# Comment the following to not automatically update your images!
+ExecStartPre={{ docker_compose_executable }} pull --quiet --ignore-pull-failures
+ExecStartPre={{ docker_compose_executable }} build --pull
 
-#   Run Compose up on service start.
-ExecStart=/usr/bin/docker compose up
+# Run Compose up on service start.
+ExecStart={{ docker_compose_executable }} up
 
-#   Run Compose down, remove containers and volumes on service stop.
-ExecStop=/usr/bin/docker compose down
+# Run Compose down, remove containers and volumes on service stop.
+ExecStop={{ docker_compose_executable }} down --remove-orphans
+
+# Run Compose pull and build on serive reload
+ExecReload={{ docker_compose_executable }} pull --quiet --ignore-pull-failures
+ExecReload={{ docker_compose_executable }} build --pull
 
 [Install]
 WantedBy=multi-user.target

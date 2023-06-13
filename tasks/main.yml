@@ -15,6 +15,25 @@
     state: "{{ docker_package_state }}"
   notify: docker_restart_dockerd
 
+- name: Check if Docker daemon.json exists
+  ansible.builtin.stat:
+    path: "{{ docker_daemon_file }}"
+  register: docker_daemon_stat_result
+
+- name: Create Docker daemon.json
+  ansible.builtin.template:
+    src: "daemon.json.j2"
+    dest: "{{ docker_daemon_file }}"
+    mode: 0644
+  when: not docker_daemon_stat_result.exists
+
+- name: Ensure Docker logs send to journald
+  ansible.builtin.lineinfile:
+    path: "{{ docker_daemon_file }}"
+    regexp: '"log-driver": '
+    insertbefore: '^}'
+    line: '  "log-driver": "journald"'
+
 - name: Ensure Docker is started and enabled at boot
   become: true
   ansible.builtin.service:

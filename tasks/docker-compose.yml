@@ -18,7 +18,7 @@
   ansible.builtin.template:
     src: docker-compose@.service.j2
     dest: "{{ docker_compose_systemd_unit_file }}"
-    mode: 0640
+    mode: 0644
   notify: systemd_reload_systemd
 
 ...
