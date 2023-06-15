@@ -16,8 +16,8 @@ Type=simple
 Restart=always
 
 # Remove old containers, images and volumes
-ExecStartPre=/usr/local/bin/docker-compose down --remove-orphans
-ExecStartPre=/usr/local/bin/docker-compose rm --force
+ExecStartPre={{ docker_compose_executable }} down --remove-orphans
+ExecStartPre={{ docker_compose_executable }} rm --force
 
 # Comment the following to not automatically update your images!
 ExecStartPre={{ docker_compose_executable }} pull --quiet --ignore-pull-failures
