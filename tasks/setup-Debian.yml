@@ -2,11 +2,12 @@
 
 - name: Ensure old versions of Docker are not installed.
   become: true
-  ansible.builtin.package:
+  ansible.builtin.apt:
     name:
       - docker
       - docker-engine
     state: absent
+    purge: true
 
 - name: Ensure dependencies are installed.
   become: true
