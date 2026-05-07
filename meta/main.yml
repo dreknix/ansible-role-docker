@@ -3,11 +3,7 @@
 allow_duplicates: false
 
 dependencies:
-  - name: dreknix.systemd
-    # src: git+https://github.com/dreknix/ansible-role-systemd.git
-    src: git@github.com:dreknix/ansible-role-systemd.git
-    scm: git
-    version: main
+  - role: dreknix.systemd
 
 galaxy_info:
   role_name: docker
