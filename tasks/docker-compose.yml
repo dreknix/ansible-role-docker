@@ -11,14 +11,14 @@
   ansible.builtin.file:
     path: "{{ docker_compose_systemd_path }}/"
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: Deploy docker-compose@.service
   become: true
   ansible.builtin.template:
     src: docker-compose@.service.j2
     dest: "{{ docker_compose_systemd_unit_file }}"
-    mode: 0644
+    mode: "0644"
   notify: systemd_reload_systemd
 
 ...
