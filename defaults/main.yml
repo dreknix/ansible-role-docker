@@ -51,4 +51,6 @@ docker_compose_systemd_unit_file: "{{ docker_compose_systemd_path }}/docker-comp
 docker_compose_base_dir: "/srv/docker"
 
 docker_compose_executable: "/usr/bin/docker compose"
+
+docker_image_prune_oncalendar: "Mon *-*-* 04:00:00" # Monday 04:00
 ...

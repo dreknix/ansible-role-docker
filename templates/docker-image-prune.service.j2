@@ -1,0 +1,11 @@
+# Managed by Ansible – do not edit manually
+
+[Unit]
+Description=Prune unused Docker images
+Documentation=man:docker-image-prune(1)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker image prune --all --force
+PrivateTmp=true
+NoNewPrivileges=true

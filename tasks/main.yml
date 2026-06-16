@@ -46,6 +46,41 @@
 - name: Ensure handlers are notified
   ansible.builtin.meta: flush_handlers
 
+- name: Deploy docker-image-prune service
+  become: true
+  ansible.builtin.template:
+    src: docker-image-prune.service.j2
+    dest: /etc/systemd/system/docker-image-prune.service
+    owner: root
+    group: root
+    mode: "0644"
+  register: docker_image_prune_service
+
+- name: Deploy docker-image-prune timer
+  become: true
+  ansible.builtin.template:
+    src: docker-image-prune.timer.j2
+    dest: /etc/systemd/system/docker-image-prune.timer
+    owner: root
+    group: root
+    mode: "0644"
+  register: docker_image_prune_timer
+
+- name: Reload system
+  become: true
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  when: >-
+    (docker_image_prune_service is defined and docker_image_prune_service.changed)
+    or (docker_image_prune_timer is defined and docker_image_prune_timer.changed)
+
+- name: Enable docker-image-prune.timer
+  become: true
+  ansible.builtin.systemd_service:
+    name: podman-image-prune.timer
+    enabled: true
+    state: started
+
 - name: Install Docker compose
   ansible.builtin.include_tasks: docker-compose.yml
   when: docker_install_compose | bool
