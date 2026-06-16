@@ -77,7 +77,7 @@
 - name: Enable docker-image-prune.timer
   become: true
   ansible.builtin.systemd_service:
-    name: podman-image-prune.timer
+    name: docker-image-prune.timer
     enabled: true
     state: started
 
