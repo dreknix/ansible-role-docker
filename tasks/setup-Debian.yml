@@ -6,6 +6,7 @@
     name:
       - docker
       - docker-engine
+      - python3-docker
     state: absent
     purge: true
 
